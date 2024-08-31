@@ -1,0 +1,66 @@
+version = 2
+final_space = true
+console_title_template = '{{ .Shell }} in {{ .Folder }}'
+
+# Status
+[[blocks]]
+  type = 'prompt'
+  alignment = 'left'
+  newline = true
+  
+  [[blocks.segments]] 
+    type = "session"
+    background = 'transparent'
+    foreground = 'green'
+    template = "<b>{{ .UserName }}</b>"
+
+  [[blocks.segments]]
+    type = 'session'
+    foreground = 'blue'
+    template = '{{ if .SSHSession }}<white> on</> <b>{{ .HostName }}</b>{{ end }}'
+
+  [[blocks.segments]]
+   type = 'path'
+   background = 'transparent'
+   foreground = 'blue'
+   template = ' <white>in</> <b>{{ .Path }}</b>'
+
+    [blocks.segments.properties]
+      style = 'folder'
+
+  [[blocks.segments]]
+    type = 'python'
+    foreground = 'green'
+    template = ' <white>via</> <b>{{ .Venv }}</b>'
+
+  [[blocks.segments]]
+    type = 'git'
+    foreground = 'black'
+    template = ' on <b>{{ .HEAD }}</b>'
+
+    [blocks.segments.properties]
+      branch_icon = ''
+
+
+# Prompt
+[[blocks]]
+  type = 'prompt'
+  alignment = 'left'
+  newline = true
+
+  [[blocks.segments]]
+    type = 'text'
+    style = 'plain'
+    foreground_templates = [
+        '{{ if gt .Code 0 }}red{{ else }}blue{{ end }}',
+    ]
+    template = '  <b>❯</b>'
+
+
+# Transient
+[transient_prompt]
+  foreground_templates = [
+    '{{ if gt .Code 0 }}yellow{{ else }}blue{{ end }}',
+  ]
+  template = '<b> ❯ </b>'
+
